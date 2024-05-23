@@ -1,0 +1,47 @@
+<div class="container">
+    <h2 class="title">Carrito</h2>
+
+    <div>
+        {{#each cartProducts}}
+        <div class="product">
+            <p>Producto: {{product.title}}</p>
+            <p>Precio: ${{product.price}}</p>
+        </div>
+        {{/each}}
+    </div>
+</div>
+
+<style>
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .product {
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+
+    .product p {
+        margin: 5px 0;
+    }
+
+    .no-products {
+        font-size: 24px;
+        color: #999;
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>
