@@ -3,8 +3,8 @@ const router = Router()
 import productModel from "../models/product.model.js"
 
 
-router.get('/', async (req, res) => {
-    let { limit = 5, page = 1, sort, query } = req.query
+router.get('/products', async (req, res) => {
+    let { limit = 4, page = 1, sort, query } = req.query
     limit = parseInt(limit)
     page = parseInt(page)
 
@@ -41,6 +41,7 @@ router.get('/', async (req, res) => {
             .limit(limit)
 
         // Construir la respuesta
+
         const response = {
             status: "success",
             payload: products,
@@ -60,6 +61,18 @@ router.get('/', async (req, res) => {
     }
 })
 
+
+router.get('/api/products/category', async(req,res)=>{
+    try{
+        const products = await productModel.find()
+        const response = products.map(product => product.toObject().category)
+        const categoryArray = [...new Set(response)]
+        res.render('partials/categories', { categoryArray: categoryArray, response: response })
+    }catch(error){
+        console.error("Error fetching categories:", error)
+        res.status(500).json({ status: "error", message: "Internal server error" })
+    }
+})
 
 // router.post('/', async (req, res) => {
 //     try{

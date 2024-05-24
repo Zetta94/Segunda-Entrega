@@ -6,9 +6,9 @@ Se pueden Ordenar por Precio Ascendente
 Se pueden Ordenar por Precio Descendente
 
 Carritos
-DDELETE elimina el carrito
+DELETE elimina los productos del carrito
 PUT actualiza correctamente los elementos del carrito
-Realizaer un populate al momento de obetener un carrito
+Realizar un populate al momento de obetener un carrito
 
 Seguridad
 La vista de productos muestra un mensaje de error si se petende agregar una pagina inexistente
