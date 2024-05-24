@@ -1,7 +1,35 @@
-<div class="container" >
+<div class="container">
     <h1 class="title">Products</h1>
+    <div>
+        {{#if categories}}
+            <div>
+                <h5>Category</h5>
+                {{#each categories}}
+                    <label class="category-label" for="category-{{@index}}">
+                        <input type="checkbox" id="category-{{@index}}" class="category-checkbox" data-category="{{this}}" aria-label="Checkbox for following text input">
+                        <span>{{this}}</span>
+                    </label>
+                {{/each}}
+                <button>
+                    <a href="/products" style="text-decoration: none;color: inherit;">Reset</a>
+                </button>
+            </div>
+        {{/if}}
+    </div>
 
-    {{> categories categoryArray=categoryArray}}
+    <div>
+        <h5>Price</h5>
+        <label for="sortAsc">
+            <input type="radio" id="sortAsc" name="sort" class="sort-radio" value="asc" aria-label="Radio button for following text input">
+            Low to high
+        </label>
+        <br>
+        <label for="sortDesc">
+            <input type="radio" id="sortDesc" name="sort" class="sort-radio" value="desc" aria-label="Radio button for following text input">
+            High to low
+        </label>
+    </div>
+
     {{#if response.payload}}
         
         <div class="row justify-content-center align-items-center gap-3">
@@ -31,6 +59,57 @@
         <h1 class="no-products">No hay productos para mostrar</h1>
     {{/if}}
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const checkboxes = document.querySelectorAll('.category-checkbox');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                const label = this.closest('.category-label');
+                if (this.checked) {
+                    label.classList.add('checked');
+                } else {
+                    label.classList.remove('checked');
+                }
+                const category = getCategory();
+                const sort = getSort();
+                updateURL(category, sort);
+            });
+        });
+
+        const sortRadios = document.querySelectorAll('.sort-radio');
+        sortRadios.forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                const category = getCategory();
+                const sort = getSort();
+                updateURL(category, sort);
+            });
+        });
+
+        function getCategory() {
+            const checkboxes = document.querySelectorAll('.category-checkbox:checked');
+            const categories = Array.from(checkboxes).map(checkbox => checkbox.getAttribute('data-category'));
+            return categories.join(',');
+        }
+
+        function getSort() {
+            const radios = document.querySelectorAll('.sort-radio:checked');
+            return radios.length > 0 ? radios[0].value : '';
+        }
+
+        function updateURL(category, sort) {
+            let query = `?limit=4&page=1`;
+            if (sort) {
+                query += `&sort=${sort}`;
+            }
+            if (category) {
+                query += `&query=${category}`;
+            }
+            window.location.href = `/products${query}`;
+        }
+
+    });
+</script>
 
 <style>
     .container {
@@ -64,22 +143,21 @@
     }
 
     .pagination a {
-        padding: 5px 10px;
-        margin: 0 5px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        text-decoration: none;
-        color: #333;
-    }
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    text-decoration: none;
+    color: #333;
+}
 
-    .pagination a:hover {
-        background-color: #eee;
-    }
+.pagination a:hover {
+    background-color: #eee;
+}
 
-    .no-products {
-        font-size: 24px;
-        color: #999;
-        text-align: center;
-        margin-top: 20px;
-    }
-</style>
+.no-products {
+    font-size: 24px;
+    color: #999;
+    text-align: center;
+    margin-top: 20px;
+}
