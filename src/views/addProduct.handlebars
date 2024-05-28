@@ -1,0 +1,44 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card text-center">
+                <img src="{{product.thumbnail}}" class="card-img-top" alt="{{product.title}}">
+                <div class="card-body">
+                    <h4 class="card-title">{{product.title}}</h4>
+                    <h5 class="card-subtitle">{{product.category}}</h5>
+                    <p class="card-text">{{product.description}}</p>
+                    <p class="card-text"><strong>Precio:</strong> ${{product.price}}</p>
+                    <p class="card-text"><strong>ID:</strong> {{product._id}}</p>
+                    <p class="card-text"><strong>Stock:</strong> {{product.stock}}</p>
+                    <div class="d-grid gap-2 d-md-block">
+                        <a href="/products" class="btn btn-primary w-100 mb-2">Volver atrás</a>
+                        <button class="btn btn-success w-100" onclick="addToCart('{{product._id}}')">Agregar al carrito</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function addToCart(pid) {
+    const cid = '6650d8c863fc4072ca760116';
+    const url = `http://localhost:8080/api/carts/${cid}/product/${pid}`;
+    try {
+        const response = await fetch(url, {
+            method: 'POST'
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log('Product added:', data);
+            alert('Product added');
+        } else {
+            throw new Error('Error ');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error to add product');
+    }
+}
+</script>

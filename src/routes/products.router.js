@@ -1,6 +1,8 @@
 import {Router} from "express"
 const router = Router()
 import productModel from "../models/product.model.js"
+import ProductManager from "../controllers/product.controller.js"
+const manager = new ProductManager()
 
 
 router.get('/products', async (req, res) => {
@@ -57,6 +59,19 @@ router.get('/products', async (req, res) => {
         }
         res.render('products',{response,categories})
     } catch (error) {
+        console.error("Error fetching products:", error)
+        res.status(500).json({ status: "error", message: "Internal server error" })
+    }
+})
+
+router.get("/product/:pid",async (req,res)=>{
+    try{
+        const {pid}= req.params
+        const product = await manager.getProduct(pid)
+        res.render('addProduct',{product})
+    
+    }
+    catch(error) {
         console.error("Error fetching products:", error)
         res.status(500).json({ status: "error", message: "Internal server error" })
     }

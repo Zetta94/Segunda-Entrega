@@ -6,7 +6,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 //Rutas
 import productRouter from "./routes/products.router.js"
-import cartRouter from './routes/carts.router.js'
+import cartRouter from "./routes/carts.router.js"
 //Handlebars
 import __dirname from './utils.js'
 import handlebars from 'express-handlebars'
@@ -38,8 +38,8 @@ app.set('views', __dirname + '/views')
 app.set('view engine', 'handlebars')
 
 app.use(express.static(__dirname + '/public'))
-app.use('/', productRouter)
 app.use('/', cartRouter)
+app.use('/', productRouter)
 
 mongoose.connect('mongodb+srv://primeraEntrega:132132132@zettacluster.hoh8p1r.mongodb.net/EcommerceSE?retryWrites=true&w=majority&appName=ZettaCluster', {})
     .then(() => { console.log("Conectado a la base de datos") })
