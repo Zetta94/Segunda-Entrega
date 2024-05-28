@@ -1,9 +1,10 @@
-<div >
-   <div class="container">
+<div class="container">
+   <div class="row justify-content-center p-2 m-2">
         {{#each cartProducts}}
         <div class="card">
             <div class="card-body m-2 p-3 gx-2">
                 <h5 class="card-title">{{product.title}} </h5>
+                <img src="{{product.thumbnail}}" class="card-img-top" alt="Img not found">
                 <div class="row p-3 align-items-center">
                     <h5> 
                          Cant: 
@@ -109,3 +110,14 @@
         })
     })
 </script>
+
+<style>
+    .card-img-top {
+    max-width: 200px; 
+    max-height: 200px; 
+    width: auto; 
+    height: auto; 
+    display: block; 
+    margin: 0 auto; 
+    }
+</style>
